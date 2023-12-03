@@ -15,11 +15,11 @@ Summary:        ROCm Compute Language Runtime
 Group:          System/Configuration/ROCm
 Url:            https://github.com/ROCm-Developer-Tools/clr
 License:        MIT
-Source0:        https://github.com/ROCm-Developer-Tools/clr/archive/refs/tags/rocm-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        https://github.com/ROCm-Developer-Tools/clr/archive/refs/tags/rocm-%{version}.tar.gz#/clr-rocm-%{version}.tar.gz
 # TODO: it would be nice to separate this into its own package:
-Source1:        https://github.com/ROCm-Developer-Tools/HIP/archive/refs/tags/rocm-%{version}.tar.gz#/HIP-%{version}.tar.gz
+Source1:        https://github.com/ROCm-Developer-Tools/HIP/archive/refs/tags/rocm-%{version}.tar.gz#/HIP-rocm-%{version}.tar.gz
 # TODO introduce HIPCC package so I can delete this:
-Source2:        https://github.com/ROCm-Developer-Tools/HIPCC/archive/refs/tags/rocm-%{version}.tar.gz#/HIPCC-%{version}.tar.gz
+Source2:        https://github.com/ROCm-Developer-Tools/HIPCC/archive/refs/tags/rocm-%{version}.tar.gz#/HIPCC-rocm-%{version}.tar.gz
  
 # Revert patch: this causes some issues with upstream LLVM 16 (RHBZ#2207599)
 #https://github.com/ROCm-Developer-Tools/ROCclr/commit/041c00465b7adcee78085dc42253d42d1bb1f250
