@@ -10,8 +10,9 @@
  
 Name:           rocclr
 Version:        %{rocm_version}
-Release:        1%{?dist}
+Release:        1
 Summary:        ROCm Compute Language Runtime
+Group:          System/Configuration/ROCm
 Url:            https://github.com/ROCm-Developer-Tools/clr
 License:        MIT
 Source0:        https://github.com/ROCm-Developer-Tools/clr/archive/refs/tags/rocm-%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -31,26 +32,25 @@ Patch6:         0001-Move-FindHIP-to-datadir.patch
 Patch8:         0001-add-long-variants-for-__ffsll.patch
  
 BuildRequires:  cmake
-BuildRequires:  clang-devel
+BuildRequires:  cmake(Clang)
 BuildRequires:  doxygen
 BuildRequires:  fdupes
-BuildRequires:  gcc-c++
-BuildRequires:  libffi-devel
-BuildRequires:  llvm-devel
+BuildRequires:  pkgconfig(libffi)
+BuildRequires:  cmake(LLVM)
 BuildRequires:  perl
 BuildRequires:  perl-generators
 BuildRequires:  pkgconfig(opengl)
 BuildRequires:  pkgconfig(numa)
 BuildRequires:  pkgconfig(ocl-icd)
-BuildRequires:  python3-cppheaderparser
-BuildRequires:  rocm-comgr-devel
+BuildRequires:  python-cppheaderparser
+BuildRequires:  cmake(amd_comgr)
 BuildRequires:  rocminfo >= %{rocm_release}
-BuildRequires:  rocm-runtime-devel >= %{rocm_release}
-BuildRequires:  zlib-devel
+BuildRequires:  cmake(hsa-runtime64) >= %{rocm_release}
+BuildRequires:  pkgconfig(zlib)
  
 # ROCclr relise on some x86 intrinsics
 # 32bit userspace is excluded as it likely doesn't work and is not very useful
-ExclusiveArch:  x86_64
+#ExclusiveArch:  x86_64
  
 # rocclr bundles OpenCL 2.2 headers
 # Some work is needed to unbundle this, as it fails to compile with latest
@@ -202,9 +202,9 @@ popd
     -DCLR_BUILD_OCL=ON \
     -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo
-%cmake_build
+%make_build
 %install
-%cmake_install
+%make_install -C build
 # Install OpenCL ICD configuration:
 install -D -m 644 opencl/config/amdocl64.icd \
     %{buildroot}%{_sysconfdir}/OpenCL/vendors/amdocl64.icd
