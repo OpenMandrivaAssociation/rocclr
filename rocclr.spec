@@ -45,7 +45,7 @@ BuildRequires:  pkgconfig(ocl-icd)
 BuildRequires:  python-cppheaderparser
 BuildRequires:  cmake(amd_comgr)
 BuildRequires:  rocminfo >= %{rocm_release}
-BuildRequires:  cmake(hsa-runtime64) >= %{rocm_release}
+BuildRequires:  rocm-runtime-devel >= %{rocm_release}
 BuildRequires:  pkgconfig(zlib)
  
 # ROCclr relise on some x86 intrinsics
