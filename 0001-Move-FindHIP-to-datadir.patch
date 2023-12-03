@@ -1,0 +1,43 @@
+From 166c36922a83dc6f640d04546e4d2d1ac2c833d0 Mon Sep 17 00:00:00 2001
+From: Jeremy Newton <Jeremy.Newton@amd.com>
+Date: Thu, 1 Jun 2023 17:54:13 -0400
+Subject: [PATCH] Move FindHIP to datadir
+
+For Fedora, hip-devel is a good place for FindHIP, but it's a noarch
+package so move it to datadir. We might want to propose this later if
+upstream separates HIP from hipamd.
+
+Change-Id: If368620a6c66ca93624d023153f756d8f5c992d2
+---
+ hipamd/CMakeLists.txt           | 2 +-
+ hipamd/packaging/CMakeLists.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hipamd/CMakeLists.txt b/hipamd/CMakeLists.txt
+index 272ebca35..c0f728411 100755
+--- a/hipamd/CMakeLists.txt
++++ b/hipamd/CMakeLists.txt
+@@ -369,7 +369,7 @@ if(NOT ${INSTALL_SOURCE} EQUAL 0)
+     if(WIN32)
+       install(DIRECTORY ${HIP_COMMON_DIR}/cmake DESTINATION .)
+     else()
+-      install(DIRECTORY ${HIP_COMMON_DIR}/cmake/ DESTINATION ${CONFIG_PACKAGE_INSTALL_DIR})
++      install(DIRECTORY ${HIP_COMMON_DIR}/cmake/ DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/hip)
+     endif()
+ endif()
+ 
+diff --git a/hipamd/packaging/CMakeLists.txt b/hipamd/packaging/CMakeLists.txt
+index e6d725b67..23ff9861a 100644
+--- a/hipamd/packaging/CMakeLists.txt
++++ b/hipamd/packaging/CMakeLists.txt
+@@ -102,7 +102,7 @@ else()
+     install(FILES ${CMAKE_BINARY_DIR}/hipamd/.hipVersion DESTINATION ${CMAKE_INSTALL_DATADIR}/hip RENAME version COMPONENT dev)
+ endif()
+ install(DIRECTORY ${HIP_COMMON_DIR}/cmake/ DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/hip COMPONENT dev)
+-install(FILES ${CMAKE_BINARY_DIR}/hipamd/hip-config.cmake ${CMAKE_BINARY_DIR}/hipamd/hip-config-version.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/hip COMPONENT dev)
++install(FILES ${CMAKE_BINARY_DIR}/hipamd/hip-config.cmake ${CMAKE_BINARY_DIR}/hipamd/hip-config-version.cmake DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/hip COMPONENT dev)
+ install(FILES ${CMAKE_BINARY_DIR}/hipamd/hip-config-amd.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/hip COMPONENT dev)
+ install(FILES ${CMAKE_BINARY_DIR}/hipamd/hip-config-nvidia.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/hip COMPONENT dev)
+ #End dev files install
+-- 
+2.41.0
