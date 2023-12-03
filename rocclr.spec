@@ -194,7 +194,7 @@ popd
     -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,noexecstack \
     -DHIP_COMMON_DIR=$(realpath HIP-rocm-%{version}) \
     -DCMAKE_INSTALL_LIBDIR=%{_lib} \
-    -DHIPCC_BIN_DIR=$(realpath HIP-rocm-%{version})/bin \
+    -DHIPCC_BIN_DIR=$(realpath HIPCC-rocm-%{version})/bin \
     -DHIP_PLATFORM=amd \
     -DROCM_PATH=%{_prefix} \
     -DBUILD_ICD=OFF \
