@@ -88,7 +88,7 @@ EOF
 
 %build
 %cmake \
-    -DCLR_BUILD_OCL=ON /
+    -DCLR_BUILD_OCL=ON \
     -DCLR_BUILD_HIP=ON
 
 %make_build
