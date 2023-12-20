@@ -1,3 +1,5 @@
+%global build_ldflags %{build_ldflags} -Wl,--undefined-version
+
 # ROCclr loads comgr at run time by soversion, so this needs to be checked when
 # updating this package as it's used for the comgr requires for opencl and hip:
 %global comgr_maj_api_ver 2
