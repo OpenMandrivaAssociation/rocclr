@@ -88,24 +88,24 @@ EOF
 
 %build
 %cmake \
-    -DCLR_BUILD_OCL=ON
+    -DCLR_BUILD_OCL=ON /
+    -DCLR_BUILD_HIP=ON
 
 %make_build
 
 %install
 %make_install -C build
 
-install -m644 README.%_real_vendor README.urpmi
+#install -m644 README.%_real_vendor README.urpmi
 
-cat > rocm.conf <<EOF
-%{install_prefix}
+cat > rocm.conf <<EO
 %{_libdir}
 EOF
 install -Dm644 rocm.conf %{buildroot}%{_sysconfdir}/ld.so.conf.d/rocm.conf
 
-mkdir -p %{buildroot}%{_sysconfdir}/OpenCL/vendors
-echo '%{install_prefix}/libamdocl64.so' > 'amdocl64.icd'
-install -Dm644 amdocl64.icd %{buildroot}%{_sysconfdir}/OpenCL/vendors/amdocl64.icd
+#mkdir -p %{buildroot}%{_sysconfdir}/OpenCL/vendors
+#echo '%{install_prefix}/libamdocl64.so' > 'amdocl64.icd'
+#install -Dm644 amdocl64.icd %{buildroot}%{_sysconfdir}/OpenCL/vendors/amdocl64.icd
 
 #Specific lib folder for ROCm
 mkdir -p %{buildroot}%{install_prefix}
@@ -141,7 +141,7 @@ ldconfig
 
 %files -n rocm-opencl
 %license opencl/LICENSE.txt
-%config(noreplace) %{_sysconfdir}/OpenCL/vendors/amdocl64.icd
+#config(noreplace) %{_sysconfdir}/OpenCL/vendors/amdocl64.icd
 #{_libdir}/libamdocl64.so.5{,.*}
 #{_libdir}/libcltrace.so.5{,.*}
 #Duplicated files:
