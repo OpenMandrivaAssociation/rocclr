@@ -86,9 +86,6 @@ EOF
 
 %build
 %cmake \
-    -Wno-dev \
-    -S "." \
-    -B build \
     -DCLR_BUILD_OCL=ON
 
 %make_build
