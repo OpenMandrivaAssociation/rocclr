@@ -85,7 +85,6 @@ Already existing users are taken care of during installation.
 EOF
 
 %build
-export ROCM_PATH="%{install_prefix}"
 %cmake \
     -Wno-dev \
     -S "." \
