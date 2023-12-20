@@ -88,8 +88,7 @@ EOF
 
 %build
 %cmake \
-    -DCLR_BUILD_OCL=ON \
-    -DCLR_BUILD_HIP=ON
+    -DCLR_BUILD_OCL=ON
 
 %make_build
 
@@ -108,15 +107,15 @@ install -Dm644 rocm.conf %{buildroot}%{_sysconfdir}/ld.so.conf.d/rocm.conf
 #install -Dm644 amdocl64.icd %{buildroot}%{_sysconfdir}/OpenCL/vendors/amdocl64.icd
 
 #Specific lib folder for ROCm
-mkdir -p %{buildroot}%{install_prefix}
-mv %{buildroot}%{_libdir}/lib* %{buildroot}%{install_prefix}
+#mkdir -p %{buildroot}%{install_prefix}
+#mv %{buildroot}%{_libdir}/lib* %{buildroot}%{install_prefix}
 
 #Avoid file conflicts with opencl-headers package:
-mkdir -p %{buildroot}%{_includedir}/rocm
-mv %{buildroot}%{_includedir}/CL %{buildroot}%{_includedir}/rocm/CL
+#mkdir -p %{buildroot}%{_includedir}/rocm
+#mv %{buildroot}%{_includedir}/CL %{buildroot}%{_includedir}/rocm/CL
 
 #Avoid file conflicts with clinfo package:
-mv %{buildroot}/%{_bindir}/clinfo %{buildroot}/%{_bindir}/rocm-clinfo
+#mv %{buildroot}/%{_bindir}/clinfo %{buildroot}/%{_bindir}/rocm-clinfo
 
 #Avoid duplicate
 rm -rf %{buildroot}/%{_usr}/opencl
