@@ -116,7 +116,7 @@ install -Dm644 rocm.conf %{buildroot}%{_sysconfdir}/ld.so.conf.d/rocm.conf
 #mv %{buildroot}%{_includedir}/CL %{buildroot}%{_includedir}/rocm/CL
 
 #Avoid file conflicts with clinfo package:
-#mv %{buildroot}/%{_bindir}/clinfo %{buildroot}/%{_bindir}/rocm-clinfo
+mv %{buildroot}/%{_bindir}/clinfo %{buildroot}/%{_bindir}/rocm-clinfo
 
 #Avoid duplicate
 rm -rf %{buildroot}/%{_usr}/opencl
@@ -150,9 +150,9 @@ ldconfig
 %files -n rocm-opencl-devel
 #{_libdir}/libamdocl64.so
 #{_libdir}/libcltrace.so
-%{_includedir}/%{name}
+#{_includedir}/%{name}
  
 %files -n rocm-clinfo
 %license opencl/LICENSE.txt
-#{_bindir}/rocm-clinfo
+%{_bindir}/rocm-clinfo
 
