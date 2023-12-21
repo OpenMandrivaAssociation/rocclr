@@ -1,4 +1,5 @@
-#define _empty_manifest_terminate_build 0
+%define _empty_manifest_terminate_build 0
+%global debug_package %{nil}
 %global build_ldflags %{build_ldflags} -Wl,--undefined-version
 
 # ROCclr loads comgr at run time by soversion, so this needs to be checked when
