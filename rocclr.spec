@@ -150,7 +150,7 @@ ldconfig
 %files -n rocm-opencl-devel
 #{_libdir}/libamdocl64.so
 #{_libdir}/libcltrace.so
-#{_includedir}/%{name}
+%{_includedir}/%{name}
  
 %files -n rocm-clinfo
 %license opencl/LICENSE.txt
