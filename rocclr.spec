@@ -143,17 +143,18 @@ ldconfig
 %files -n rocm-opencl
 %license opencl/LICENSE.txt
 #config(noreplace) %{_sysconfdir}/OpenCL/vendors/amdocl64.icd
-#{_libdir}/libamdocl64.so.5{,.*}
-#{_libdir}/libcltrace.so.5{,.*}
+%{_libdir}/libamdocl64.so.5{,.*}
+%{_libdir}/libcltrace.so.5{,.*}
 #Duplicated files:
 %exclude %{_docdir}/*/LICENSE*
  
 %files -n rocm-opencl-devel
-#{_libdir}/libamdocl64.so
-#{_libdir}/libcltrace.so
-#{_includedir}/%{name}
+%{_libdir}/libamdocl64.so
+%{_libdir}/libcltrace.so
+%{_libdir}/libOpenCL.so
+%{_includedir}/CL/
  
 %files -n rocm-clinfo
 %license opencl/LICENSE.txt
-#{_bindir}/rocm-clinfo
+%{_bindir}/clinfo
 
