@@ -154,5 +154,5 @@ ldconfig
  
 %files -n rocm-clinfo
 %license opencl/LICENSE.txt
-%{_bindir}/rocm-clinfo
+#{_bindir}/rocm-clinfo
 
