@@ -31,7 +31,7 @@ BuildRequires:  perl
 BuildRequires:  perl-generators
 BuildRequires:  pkgconfig(opengl)
 BuildRequires:  pkgconfig(numa)
-BuildRequires:  pkgconfig(ocl-icd)
+BuildRequires:  pkgconfig(OpenCL)
 BuildRequires:  python-cppheaderparser
 BuildRequires:  cmake(amd_comgr)
 BuildRequires:  rocminfo >= %{rocm_release}
@@ -76,8 +76,6 @@ device information.
  
 %prep
 %autosetup -n clr-rocm-%{version} -p1
- 
-
 # Enable experimental pre vega platforms
 sed -i 's/\(ROC_ENABLE_PRE_VEGA.*\)false/\1true/' rocclr/utils/flags.hpp
 
@@ -88,29 +86,30 @@ Already existing users are taken care of during installation.
 =============================================================
 EOF
 
-%build
 %cmake \
-    -DCLR_BUILD_OCL=ON
+	-DCLR_BUILD_OCL=ON \
+	-G Ninja
 
-%make_build
+%build
+%ninja_build -C build
 
 %install
-%make_install -C build
+%ninja_install -C build
 
 #install -m644 README.%_real_vendor README.urpmi
 
-cat > rocm.conf <<EO
-%{_libdir}
+cat > rocm.conf <<EOF
+%{_libdir}/rocm
 EOF
 install -Dm644 rocm.conf %{buildroot}%{_sysconfdir}/ld.so.conf.d/rocm.conf
 
 mkdir -p %{buildroot}%{_sysconfdir}/OpenCL/vendors
-echo '%{install_prefix}/libamdocl64.so' > 'amdocl64.icd'
+echo '%{_libdir}/rocm/libamdocl64.so' > 'amdocl64.icd'
 install -Dm644 amdocl64.icd %{buildroot}%{_sysconfdir}/OpenCL/vendors/amdocl64.icd
 
 #Specific lib folder for ROCm
-mkdir -p %{buildroot}%{install_prefix}
-mv %{buildroot}%{_libdir}/lib* %{buildroot}%{install_prefix}
+mkdir -p %{buildroot}%{_libdir}/rocm
+mv %{buildroot}%{_libdir}/lib* %{buildroot}%{_libdir}/rocm
 
 #Avoid file conflicts with opencl-headers package:
 mkdir -p %{buildroot}%{_includedir}/rocm
@@ -143,16 +142,12 @@ ldconfig
 %files -n rocm-opencl
 %license opencl/LICENSE.txt
 #config(noreplace) %{_sysconfdir}/OpenCL/vendors/amdocl64.icd
-%{_libdir}/libamdocl64.so.5{,.*}
-%{_libdir}/libcltrace.so.5{,.*}
+%{_libdir}/rocm
 #Duplicated files:
 %exclude %{_docdir}/*/LICENSE*
  
 %files -n rocm-opencl-devel
-%{_libdir}/libamdocl64.so
-%{_libdir}/libcltrace.so
-%{_libdir}/libOpenCL.so
-%{_includedir}/CL/
+%{_includedir}/rocm/CL
  
 %files -n rocm-clinfo
 %license opencl/LICENSE.txt
