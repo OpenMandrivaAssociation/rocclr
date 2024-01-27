@@ -20,6 +20,8 @@ Group:          System/Configuration/ROCm
 Url:            https://github.com/ROCm-Developer-Tools/clr
 License:        MIT
 Source0:        https://github.com/ROCm-Developer-Tools/clr/archive/refs/tags/rocm-%{version}.tar.gz#/clr-rocm-%{version}.tar.gz
+Source1:	https://github.com/ROCm-Developer-Tools/HIP/archive/refs/tags/rocm-%{version}.tar.gz#/HIP-%{version}.tar.gz
+Source2:	https://github.com/ROCm-Developer-Tools/HIPCC/archive/refs/tags/rocm-%{version}.tar.gz#/HIPCC-%{version}.tar.gz
  
 BuildRequires:  cmake
 BuildRequires:  cmake(Clang)
@@ -75,7 +77,7 @@ A simple ROCm OpenCL application that enumerates all possible platform and
 device information.
  
 %prep
-%autosetup -n clr-rocm-%{version} -p1
+%autosetup -n clr-rocm-%{version} -p1 -a 1
 # Enable experimental pre vega platforms
 sed -i 's/\(ROC_ENABLE_PRE_VEGA.*\)false/\1true/' rocclr/utils/flags.hpp
 
@@ -86,8 +88,17 @@ Already existing users are taken care of during installation.
 =============================================================
 EOF
 
+cd HIP-rocm-%{version}
+tar --strip-components=1 -xof %{S:2}
+cd ..
+
+TOP="$(pwd)"
 %cmake \
 	-DCLR_BUILD_OCL=ON \
+	-DHIP_COMMON_DIR="${TOP}/HIP-rocm-%{version}" \
+	-DHIPCC_BIN_DIR="${TOP}/HIP-rocm-%{version}/bin" \
+	-DHIP_PLATFORM=amd \
+	-DCLR_BUILD_HIP=ON \
 	-G Ninja
 
 %build
