@@ -42,7 +42,7 @@ BuildRequires:  pkgconfig(zlib)
  
 # ROCclr relise on some x86 intrinsics
 # 32bit userspace is excluded as it likely doesn't work and is not very useful
-#ExclusiveArch:  x86_64
+#ExclusiveArch:  %{x86_64}
  
 # rocclr bundles OpenCL 2.2 headers
 # Some work is needed to unbundle this, as it fails to compile with latest
@@ -54,8 +54,7 @@ ROCm Compute Language Runtime
 %package -n rocm-opencl
 Summary:        ROCm OpenCL platform and device tool
 Requires:       comgr(major) = %{comgr_maj_api_ver}
-Requires:       ocl-icd%{?_isa}
-Requires:       opencl-filesystem
+Requires:	%mklibname OpenCL
  
 %description -n rocm-opencl
 ROCm OpenCL language runtime.
@@ -64,7 +63,7 @@ Supports offline and in-process/in-memory compilation.
 %package -n rocm-opencl-devel
 Summary:        ROCm OpenCL development package
 Requires:       rocm-opencl%{?_isa} = %{version}-%{release}
-Requires:       ocl-icd-devel%{?_isa}
+Requires:       pkgconfig(OpenCL)
  
 %description -n rocm-opencl-devel
 The AMD ROCm OpenCL development package.
