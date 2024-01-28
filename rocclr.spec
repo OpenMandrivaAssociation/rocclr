@@ -152,13 +152,28 @@ ldconfig
 
 %files -n rocm-opencl
 %license opencl/LICENSE.txt
-#config(noreplace) %{_sysconfdir}/OpenCL/vendors/amdocl64.icd
+%config(noreplace) %{_sysconfdir}/OpenCL/vendors/amdocl64.icd
+%{_sysconfdir}/ld.so.conf.d/rocm.conf
 %{_libdir}/rocm
 #Duplicated files:
 %exclude %{_docdir}/*/LICENSE*
  
 %files -n rocm-opencl-devel
 %{_includedir}/rocm/CL
+%{_bindir}/hipcc*
+%{_bindir}/hipconfig*
+%{_bindir}/hipdemangleatp
+%{_bindir}/hipvars.pm
+%{_bindir}/roc-obj*
+# FIXME the %{_prefix}/hip directory structure is not FHS compliant,
+# stuff should move to standard locations
+%{_prefix}/hip
+%{_includedir}/hip
+%{_includedir}/hip_prof_str.h
+%{_libdir}/.hipInfo
+%{_libdir}/cmake/hip*
+%{_datadir}/hip
+%doc %{_docdir}/hip
  
 %files -n rocm-clinfo
 %license opencl/LICENSE.txt
