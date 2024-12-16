@@ -38,6 +38,7 @@ BuildRequires:	cmake(rocprofiler-register)
 BuildRequires:	rocm-opencl-devel
 BuildRequires:  rocm-runtime-devel >= %{rocm_release}
 BuildRequires:  rocminfo >= %{rocm_release}
+BuildRequires:	rocm-comgr
 BuildRequires:  pkgconfig(zlib)
  
 # rocclr bundles OpenCL 2.2 headers
