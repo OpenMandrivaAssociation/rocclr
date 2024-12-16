@@ -35,13 +35,10 @@ BuildRequires:  pkgconfig(OpenCL)
 BuildRequires:  python-cppheaderparser
 BuildRequires:  cmake(amd_comgr)
 BuildRequires:	cmake(rocprofiler-register)
-#BuildRequires:  rocminfo >= %{rocm_release}
-#BuildRequires:  rocm-runtime-devel >= %{rocm_release}
+BuildRequires:	rocm-opencl-devel
+BuildRequires:  rocm-runtime-devel >= %{rocm_release}
+BuildRequires:  rocminfo >= %{rocm_release}
 BuildRequires:  pkgconfig(zlib)
- 
-# ROCclr relise on some x86 intrinsics
-# 32bit userspace is excluded as it likely doesn't work and is not very useful
-#ExclusiveArch:  %{x86_64}
  
 # rocclr bundles OpenCL 2.2 headers
 # Some work is needed to unbundle this, as it fails to compile with latest
