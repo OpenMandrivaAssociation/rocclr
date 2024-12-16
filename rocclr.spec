@@ -50,7 +50,7 @@ ROCm Compute Language Runtime
  
 %package -n rocm-opencl
 Summary:        ROCm OpenCL platform and device tool
-Requires:       comgr(major) = %{comgr_maj_api_ver}
+Requires:       rocm-comgr
 Requires:	%mklibname OpenCL
  
 %description -n rocm-opencl
