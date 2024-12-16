@@ -8,12 +8,11 @@
 # See the file "rocclr/device/comgrctx.cpp" for reference:
 # https://github.com/ROCm-Developer-Tools/ROCclr/blob/develop/device/comgrctx.cpp#L62
  
-%global rocm_release 5.7
-%global rocm_patch 1
-%global rocm_version %{rocm_release}.%{rocm_patch}
+%global rocm_release %(echo %{version}|cut -d. -f1-2)
+%global rocm_patch %(echo %{version}|cut -d. -f3-)
  
 Name:           rocclr
-Version:        %{rocm_version}
+Version:        6.3.0
 Release:        1
 Summary:        ROCm Compute Language Runtime
 Group:          System/Configuration/ROCm
@@ -21,7 +20,6 @@ Url:            https://github.com/ROCm-Developer-Tools/clr
 License:        MIT
 Source0:        https://github.com/ROCm-Developer-Tools/clr/archive/refs/tags/rocm-%{version}.tar.gz#/clr-rocm-%{version}.tar.gz
 Source1:	https://github.com/ROCm-Developer-Tools/HIP/archive/refs/tags/rocm-%{version}.tar.gz#/HIP-%{version}.tar.gz
-Source2:	https://github.com/ROCm-Developer-Tools/HIPCC/archive/refs/tags/rocm-%{version}.tar.gz#/HIPCC-%{version}.tar.gz
  
 BuildRequires:  cmake
 BuildRequires:  cmake(Clang)
@@ -36,8 +34,9 @@ BuildRequires:  pkgconfig(numa)
 BuildRequires:  pkgconfig(OpenCL)
 BuildRequires:  python-cppheaderparser
 BuildRequires:  cmake(amd_comgr)
-BuildRequires:  rocminfo >= %{rocm_release}
-BuildRequires:  rocm-runtime-devel >= %{rocm_release}
+BuildRequires:	cmake(rocprofiler-register)
+#BuildRequires:  rocminfo >= %{rocm_release}
+#BuildRequires:  rocm-runtime-devel >= %{rocm_release}
 BuildRequires:  pkgconfig(zlib)
  
 # ROCclr relise on some x86 intrinsics
@@ -87,15 +86,11 @@ Already existing users are taken care of during installation.
 =============================================================
 EOF
 
-cd HIP-rocm-%{version}
-tar --strip-components=1 -xof %{S:2}
-cd ..
-
 TOP="$(pwd)"
 %cmake \
 	-DCLR_BUILD_OCL=ON \
 	-DHIP_COMMON_DIR="${TOP}/HIP-rocm-%{version}" \
-	-DHIPCC_BIN_DIR="${TOP}/HIP-rocm-%{version}/bin" \
+	-DHIPCC_BIN_DIR="%{_bindir}" \
 	-DHIP_PLATFORM=amd \
 	-DCLR_BUILD_HIP=ON \
 	-G Ninja
@@ -164,9 +159,6 @@ ldconfig
 %{_bindir}/hipdemangleatp
 %{_bindir}/hipvars.pm
 %{_bindir}/roc-obj*
-# FIXME the %{_prefix}/hip directory structure is not FHS compliant,
-# stuff should move to standard locations
-%{_prefix}/hip
 %{_includedir}/hip
 %{_includedir}/hip_prof_str.h
 %{_libdir}/.hipInfo
@@ -177,4 +169,3 @@ ldconfig
 %files -n rocm-clinfo
 %license opencl/LICENSE.txt
 %{_bindir}/rocm-clinfo
-

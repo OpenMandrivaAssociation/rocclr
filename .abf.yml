@@ -1,4 +1,3 @@
 sources:
-  clr-rocm-5.7.1.tar.gz: bf12a6d59e4cfdd70011e4194c0bfb79bb913ca4
-  HIP-5.7.1.tar.gz: 3631a5ec9ff88152507a9782abebef36102a10d4
-  HIPCC-5.7.1.tar.gz: 899b0a8262986c0e13d1cb1a970c82a40a68654f
+  HIP-6.3.0.tar.gz: 9827d6f3f021ad1cd170296bdc441da5a13d0e45
+  clr-rocm-6.3.0.tar.gz: 0aab78de4755b1bc6308ae6f1424914fad9788f6
