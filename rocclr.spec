@@ -12,7 +12,7 @@
 %global rocm_patch %(echo %{version}|cut -d. -f3-)
  
 Name:           rocclr
-Version:        6.3.0
+Version:        6.3.3
 Release:        1
 Summary:        ROCm Compute Language Runtime
 Group:          System/Configuration/ROCm
