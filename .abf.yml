@@ -1,5 +1,0 @@
-sources:
-  HIP-6.3.3.tar.gz: 8e5b48a81759337222b9c61950e8a981968df521
-  clr-7.14.0.tar.gz: f08741f10084b80413eaf9d368cbde3be5b37dac
-  clr-rocm-6.3.3.tar.gz: 8a41538d1aab12b13b43aafe962d8f20ca49fa28
-  hip-7.14.0.tar.gz: 3dbd79e041e07b114eba843e42893cf30245420c
