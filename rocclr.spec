@@ -33,6 +33,9 @@ BuildRequires:	cmake(amd_comgr)
 BuildRequires:	rocm-device-libs
 BuildRequires:	rocprofiler-register
 BuildRequires:	pkgconfig(libdrm)
+BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(glx)
+BuildRequires:	pkgconfig(opengl)
 BuildRequires:	pkgconfig(libelf)
 BuildRequires:	pkgconfig(OpenCL)
 BuildRequires:	opencl-headers
