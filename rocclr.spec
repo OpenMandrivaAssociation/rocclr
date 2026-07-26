@@ -167,12 +167,12 @@ cp -a build/hipamd/hiprtc-config*.cmake %{buildroot}%{_libdir}/cmake/hiprtc/ 2>/
 cp -a build/hipamd/hiprtc-targets*.cmake %{buildroot}%{_libdir}/cmake/hiprtc/ 2>/dev/null || true
 # Always ensure targets exist (build tree often omits export files under FHS layout)
 if [ ! -e %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config.cmake ]; then
-install -m 644 %{SOURCE6} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config.cmake
-install -m 644 %{SOURCE7} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config-version.cmake
+  install -m 644 %{SOURCE6} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config.cmake
+  install -m 644 %{SOURCE7} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config-version.cmake
 fi
 if [ ! -e %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets.cmake ]; then
-install -m 644 %{SOURCE8} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets.cmake
-install -m 644 %{SOURCE9} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets-relwithdebinfo.cmake
+  install -m 644 %{SOURCE8} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets.cmake
+  install -m 644 %{SOURCE9} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets-relwithdebinfo.cmake
 fi
 
 # OpenCL ICD
