@@ -26,8 +26,8 @@ BuildRequires:	rocm-rpm-macros
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	clang >= %{rocm_llvm_maj_ver}
-BuildRequires:	lib64clang-devel >= %{rocm_llvm_maj_ver}
-BuildRequires:	lib64llvm-devel >= %{rocm_llvm_maj_ver}
+BuildRequires:	clang-devel >= %{rocm_llvm_maj_ver}
+BuildRequires:	llvm-devel >= %{rocm_llvm_maj_ver}
 BuildRequires:	cmake(hsa-runtime64)
 BuildRequires:	cmake(amd_comgr)
 BuildRequires:	rocm-device-libs
