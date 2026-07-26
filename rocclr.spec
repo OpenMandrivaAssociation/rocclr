@@ -31,7 +31,7 @@ BuildRequires:	llvm-devel >= %{rocm_llvm_maj_ver}
 BuildRequires:	cmake(hsa-runtime64)
 BuildRequires:	cmake(amd_comgr)
 BuildRequires:	rocm-device-libs
-BuildRequires:	rocprofiler-register
+BuildRequires:	rocprofiler-register-devel
 BuildRequires:	pkgconfig(libdrm)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glx)
