@@ -5,6 +5,7 @@
 Name:		rocclr
 Version:	7.14.0
 Release:	1
+%{!?rocm_llvm_maj_ver:%global rocm_llvm_maj_ver 23}
 Summary:	ROCm Compute Language Runtime
 License:	MIT AND Apache-2.0 AND MIT-Khronos-old
 Group:		System/Libraries
@@ -25,8 +26,8 @@ BuildRequires:	rocm-rpm-macros
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	clang >= %{rocm_llvm_maj_ver}
-BuildRequires:	libclang-devel >= %{rocm_llvm_maj_ver}
-BuildRequires:	libllvm-devel >= %{rocm_llvm_maj_ver}
+BuildRequires:	lib64clang-devel >= %{rocm_llvm_maj_ver}
+BuildRequires:	lib64llvm-devel >= %{rocm_llvm_maj_ver}
 BuildRequires:	cmake(hsa-runtime64)
 BuildRequires:	cmake(amd_comgr)
 BuildRequires:	rocm-device-libs
