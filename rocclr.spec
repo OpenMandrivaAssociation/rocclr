@@ -18,6 +18,10 @@ Source2:	hip-targets.cmake
 Source3:	hip-lang-config.cmake
 Source4:	hip-lang-targets.cmake
 Source5:	hip-lang-config-version.cmake
+Source6:	hiprtc-config.cmake
+Source7:	hiprtc-config-version.cmake
+Source8:	hiprtc-targets.cmake
+Source9:	hiprtc-targets-relwithdebinfo.cmake
 
 # Full version string in soname is awkward; use major for Provides
 %global hip_so_major 7
@@ -161,9 +165,14 @@ fi
 mkdir -p %{buildroot}%{_libdir}/cmake/hiprtc
 cp -a build/hipamd/hiprtc-config*.cmake %{buildroot}%{_libdir}/cmake/hiprtc/ 2>/dev/null || true
 cp -a build/hipamd/hiprtc-targets*.cmake %{buildroot}%{_libdir}/cmake/hiprtc/ 2>/dev/null || true
-# Fall back to staged copies from a prior install tree if build did not emit them
-if [ ! -e %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config.cmake ] && [ -d %{_sourcedir}/hiprtc-cmake ]; then
-	cp -a %{_sourcedir}/hiprtc-cmake/. %{buildroot}%{_libdir}/cmake/hiprtc/
+# Always ensure targets exist (build tree often omits export files under FHS layout)
+if [ ! -e %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config.cmake ]; then
+install -m 644 %{SOURCE6} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config.cmake
+install -m 644 %{SOURCE7} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-config-version.cmake
+fi
+if [ ! -e %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets.cmake ]; then
+install -m 644 %{SOURCE8} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets.cmake
+install -m 644 %{SOURCE9} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets-relwithdebinfo.cmake
 fi
 
 # OpenCL ICD
