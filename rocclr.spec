@@ -40,7 +40,7 @@ BuildRequires:	pkgconfig(libelf)
 BuildRequires:	pkgconfig(OpenCL)
 BuildRequires:	opencl-headers
 BuildRequires:	python3
-# Optional: python3-CppHeaderParser for profiling API gen
+BuildRequires:	python%{pyver}dist(cppheaderparser)
 
 ExclusiveArch:	%{x86_64} %{aarch64}
 
