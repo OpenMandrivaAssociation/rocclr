@@ -4,7 +4,7 @@
 
 Name:		rocclr
 Version:	7.14.0
-Release:	1
+Release:	2
 %{!?rocm_llvm_maj_ver:%global rocm_llvm_maj_ver 23}
 Summary:	ROCm Compute Language Runtime
 License:	MIT AND Apache-2.0 AND MIT-Khronos-old
@@ -46,7 +46,6 @@ BuildRequires:	opencl-headers
 BuildRequires:	python3
 BuildRequires:	python%{pyver}dist(cppheaderparser)
 
-ExclusiveArch:	%{x86_64} %{aarch64}
 
 %description
 ROCclr is the shared runtime underneath HIP and ROCm OpenCL.
