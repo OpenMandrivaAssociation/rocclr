@@ -1,17 +1,17 @@
-# ROCclr + HIP runtime (TheRock 7.14). OpenCL ICD optional.
+# ROCclr + HIP runtime (TheRock 10.0). OpenCL ICD optional.
 # Build needs: rocm-runtime, rocm-comgr, rocm-device-libs, rocprofiler-register.
 # hipcc is optional at configure time if HIP_PLATFORM=amd is set.
 
 Name:		rocclr
-Version:	7.14.0
-Release:	2
+Version:	10.0.0
+Release:	1
 %{!?rocm_llvm_maj_ver:%global rocm_llvm_maj_ver 23}
 Summary:	ROCm Compute Language Runtime
 License:	MIT AND Apache-2.0 AND MIT-Khronos-old
 Group:		System/Libraries
 URL:		https://github.com/ROCm/rocm-systems
-Source0:	https://github.com/ROCm/rocm-systems/releases/download/therock-7.14/clr.tar.gz#/clr-%{version}.tar.gz
-Source1:	https://github.com/ROCm/rocm-systems/releases/download/therock-7.14/hip.tar.gz#/hip-%{version}.tar.gz
+Source0:	https://github.com/ROCm/rocm-systems/releases/download/therock-10.0/clr.tar.gz#/clr-%{version}.tar.gz
+Source1:	https://github.com/ROCm/rocm-systems/releases/download/therock-10.0/hip.tar.gz#/hip-%{version}.tar.gz
 # Minimal IMPORTED targets until full cmake export is restored
 Source2:	hip-targets.cmake
 # CMake enable_language(HIP) package (FHS, system clang)
@@ -24,6 +24,7 @@ Source8:	hiprtc-targets.cmake
 Source9:	hiprtc-targets-relwithdebinfo.cmake
 
 # Full version string in soname is awkward; use major for Provides
+# Upstream HIP VERSION in TheRock 10.0 is still 7.15; soname stays .7
 %global hip_so_major 7
 
 BuildRequires:	rocm-rpm-macros
@@ -173,6 +174,10 @@ if [ ! -e %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets.cmake ]; then
   install -m 644 %{SOURCE8} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets.cmake
   install -m 644 %{SOURCE9} %{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets-relwithdebinfo.cmake
 fi
+# TheRock 10.0 still ships HIP 7.15 sonames. Generated hiprtc cmake follows
+# HIP_VERSION_MAJOR=%{rocm_major} (10) and points at libhiprtc.so.10.
+sed -i 's/libhiprtc\.so\.%{rocm_major}/libhiprtc.so.%{hip_so_major}/g' \
+	%{buildroot}%{_libdir}/cmake/hiprtc/hiprtc-targets*.cmake 2>/dev/null || true
 
 # OpenCL ICD
 echo '%{_libdir}/libamdocl64.so' > %{buildroot}%{_sysconfdir}/OpenCL/vendors/amdocl64.icd
