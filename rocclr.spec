@@ -4,7 +4,7 @@
 
 Name:		rocclr
 Version:	10.0.0
-Release:	1
+Release:	2
 %{!?rocm_llvm_maj_ver:%global rocm_llvm_maj_ver 23}
 Summary:	ROCm Compute Language Runtime
 License:	MIT AND Apache-2.0 AND MIT-Khronos-old
@@ -22,6 +22,9 @@ Source6:	hiprtc-config.cmake
 Source7:	hiprtc-config-version.cmake
 Source8:	hiprtc-targets.cmake
 Source9:	hiprtc-targets-relwithdebinfo.cmake
+# #7727 alignas(64) VirtualGPU + class-specific operator new(size_t)
+# hid aligned new; AVX vmovaps of those members #GPs under -march=znver1.
+Patch0:	0001-ReferenceCountedObject-honor-overaligned-new.patch
 
 # Full version string in soname is awkward; use major for Provides
 # Upstream HIP VERSION in TheRock 10.0 is still 7.15; soname stays .7
@@ -83,6 +86,7 @@ AMD ROCm OpenCL platform (libamdocl64). Mesa Rusticl remains an alternative ICD.
 
 %prep
 %setup -q -n clr
+%patch -P0 -p1
 # hip tarball extracts as top-level "hip/"
 tar -xf %{SOURCE1} -C ..
 # ensure hip is at ../hip relative to clr, or move
