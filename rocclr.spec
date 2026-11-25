@@ -22,6 +22,9 @@ Source6:	hiprtc-config.cmake
 Source7:	hiprtc-config-version.cmake
 Source8:	hiprtc-targets.cmake
 Source9:	hiprtc-targets-relwithdebinfo.cmake
+# HIP capture wire format. Not inside clr; amdhip64 includes
+# hrr/hrr_api_args.h from a sibling hrr/include tree.
+Source10:	https://github.com/ROCm/rocm-systems/releases/download/therock-10.2/hrr.tar.gz#/hrr-%{version}.tar.gz
 # #7727 alignas(64) VirtualGPU + class-specific operator new(size_t)
 # hid aligned new; AVX vmovaps of those members #GPs under -march=znver1.
 Patch0:	0001-ReferenceCountedObject-honor-overaligned-new.patch
@@ -89,10 +92,14 @@ AMD ROCm OpenCL platform (libamdocl64). Mesa Rusticl remains an alternative ICD.
 %patch -P0 -p1
 # hip tarball extracts as top-level "hip/"
 tar -xf %{SOURCE1} -C ..
+# hrr.tar.gz extracts as top-level "hrr/". hipamd/src/hrr includes
+# "hrr/hrr_api_args.h" via ../../../../hrr/include, a sibling of clr.
+tar -xf %{SOURCE10} -C ..
 # ensure hip is at ../hip relative to clr, or move
 if [ ! -d hip ] && [ -d ../hip ]; then
 	ln -sfn ../hip hip
 fi
+test -f ../hrr/include/hrr/hrr_api_args.h || { echo "missing HRR headers at ../hrr/include"; exit 1; }
 # Disable doxygen ALL target (broken doxygen vs clang 23 soname)
 sed -i 's/add_custom_target(build_doxygen ALL/add_custom_target(build_doxygen/' \
 	hipamd/packaging/CMakeLists.txt
