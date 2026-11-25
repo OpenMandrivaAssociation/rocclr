@@ -4,7 +4,7 @@
 
 Name:		rocclr
 Version:	10.2.0
-Release:	1
+Release:	2
 %{!?rocm_llvm_maj_ver:%global rocm_llvm_maj_ver 23}
 Summary:	ROCm Compute Language Runtime
 License:	MIT AND Apache-2.0 AND MIT-Khronos-old
@@ -74,6 +74,10 @@ Summary:	HIP development files
 Group:		Development/C++
 Requires:	rocm-hip%{?_isa} = %{version}-%{release}
 Requires:	hipcc
+# 10.2 hip-config-amd.cmake find_dependency()s these. The cmake files
+# live in the devel packages, which the runtime Requires do not pull in.
+Requires:	cmake(amd_comgr)
+Requires:	cmake(hsa-runtime64)
 
 %description -n rocm-hip-devel
 HIP headers and CMake packages.
